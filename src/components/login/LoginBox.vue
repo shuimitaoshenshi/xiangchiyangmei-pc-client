@@ -31,7 +31,13 @@
                     :rules="rules"
                     hide-details="auto"
                   ></v-text-field>
-                  <v-text-field label="密码"></v-text-field>
+                  <v-text-field
+                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                    :rules="rules"
+                    :type="show1 ? 'text' : 'password'"
+                    label="密码"
+                    @click:append="show1 = !show1"
+                  ></v-text-field>
                 </div>
               </template>
             </div>
@@ -62,10 +68,12 @@ export default {
     return {
       tab: null,
       items: ['农户', '买家'],
-      rules: [
-        (value) => !!value || 'Required.',
-        (value) => (value && value.length >= 3) || 'Min 3 characters'
-      ],
+      rules: {
+        required: (value) => !!value || 'Required.',
+        min: (v) => v.length >= 8 || 'Min 8 characters',
+        emailMatch: () => ''
+      },
+      show1: false,
       register: false
     }
   },
